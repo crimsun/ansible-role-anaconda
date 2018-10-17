@@ -24,10 +24,8 @@
     path: '{{ ansible_env.HOME }}/.bashrc'
     state: present
     line: '{{ item }}'
-    insertbefore: BOF
   with_items:
-    - 'export PATH=$ANACONDA_HOME/bin:$PATH'
-    - 'export ANACONDA_HOME={{ anaconda_home_dir }}'
+    - ". {{ anaconda_home_dir }}/etc/profile.d/conda.sh"
 
 - name: Update conda config
   template:
@@ -40,13 +38,13 @@
   when: anaconda_update_packages
   command: '{{ anaconda_conda_executable }} update -y --all'
   register: conda_update_result
-  changed_when: not (conda_update_result.stdout | search('All requested packages already installed'))
+  changed_when: not (conda_update_result.stdout is search('All requested packages already installed'))
 
 - name: Install additional conda packages
   when: anaconda_install_packages != ''
   command: '{{ anaconda_conda_executable }} install -y {{ anaconda_install_packages }}'
   register: conda_install_result
-  changed_when: not (conda_install_result.stdout | search('All requested packages already installed'))
+  changed_when: not (conda_install_result.stdout is search('All requested packages already installed'))
 
 - name: Upgrade core libraries that are known to cause issues with certain packages
   when: anaconda_apply_compatibility_updates
@@ -57,7 +55,7 @@
     - name: Update libgcc for Anaconda
       command: '{{ anaconda_conda_executable }} install -y libgcc'
       register: compatibility_update_result
-      changed_when: not (compatibility_update_result.stdout | search('All requested packages already installed'))
+      changed_when: not (compatibility_update_result.stdout is search('All requested packages already installed'))
 
 - name: Upgrade setuptools
   when: anaconda_apply_compatibility_updates
