@@ -6,15 +6,14 @@ anaconda_download_mirror: 'http://repo.continuum.io/archive'
 anaconda_download_timeout_sec: 600
 
 # Anaconda Python version (2 or 3).
-anaconda_python_version: 3
+anaconda_python_version: 2
 
 # Anaconda version.
-anaconda_version: '4.4.0'
+anaconda_version: '5.3.0'
 
 # Download package checksums.
 anaconda_checksums:
-  Anaconda2-4.4.0-Linux-x86_64.sh: sha256:2d30b91ed4d215b6b4a15162a3389e9057b15445a0c02da71bd7bd272e7b824e
-  Anaconda3-4.4.0-Linux-x86_64.sh: sha256:3301b37e402f3ff3df216fe0458f1e6a4ccbb7e67b4d626eae9651de5ea3ab63
+  Anaconda2-5.3.0-Linux-x86_64.sh: sha256:50eeaab24bfa2472bc6485fe8f0e612ed67e561eda1ff9fbf07b62c96443c1be
 
 # Anaconda home directory.
 anaconda_home_dir: '{{ ansible_env.HOME }}/anaconda'
@@ -23,7 +22,7 @@ anaconda_home_dir: '{{ ansible_env.HOME }}/anaconda'
 anaconda_make_default_python: yes
 
 # Update anaconda packages upon installation.
-anaconda_update_packages: no
+anaconda_update_packages: yes
 
 # Patch core libraries that are known to cause issues with some packages.
 anaconda_apply_compatibility_updates: yes
